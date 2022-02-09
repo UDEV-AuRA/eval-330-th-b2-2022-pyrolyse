@@ -86,9 +86,7 @@ public class artists {
         albumService.deleteAlbum(albumId);
         return new RedirectView("/");
     }
-    //@RequestMapping(method = RequestMethod.POST, value = "/artists/albums/new") {
-        //public
-    //}
+
 
 
 
