@@ -8,12 +8,14 @@ import com.ipiecoles.java.eval.th330.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
@@ -60,6 +62,35 @@ public class artists {
         }
         return "listeArtists";
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/artist/new")
+    public String newArtist(final ModelMap model) {
+        model.put("artist", new Artist());
+        return  "detailArtist";
+    }
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/artists/new")
+    public RedirectView newArtists(Artist artist) {
+        if (artist.getId() != null) {
+            artist = artistService.updateArtiste(artist.getId(), artist);
+        } else {
+            artist = artistService.creerArtiste(artist);
+        }
+        return new RedirectView("/artists/" + artist.getId());
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/artists/{id}/delete")
+    public RedirectView deleteArtist(@PathVariable(value = "id") Long id) {
+        artistService.deleteArtist(id);
+        return new RedirectView("/");
+    }
+    @RequestMapping(method = RequestMethod.GET, value="/artists/albums/delete/{id}")
+    public RedirectView deleteAlbum(@PathVariable(value = "id") Long albumId) {
+        albumService.deleteAlbum(albumId);
+        return new RedirectView("/");
+    }
+    //@RequestMapping(method = RequestMethod.POST, value = "/artists/albums/new") {
+        //public
+    //}
+
+
 
 
 }
