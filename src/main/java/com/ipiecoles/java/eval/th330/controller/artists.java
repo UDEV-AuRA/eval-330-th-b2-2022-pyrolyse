@@ -1,5 +1,6 @@
 package com.ipiecoles.java.eval.th330.controller;
 
+import com.ipiecoles.java.eval.th330.model.Album;
 import com.ipiecoles.java.eval.th330.model.Artist;
 import com.ipiecoles.java.eval.th330.repository.AlbumRepository;
 import com.ipiecoles.java.eval.th330.repository.ArtistRepository;
@@ -85,6 +86,11 @@ public class artists {
     public RedirectView deleteAlbum(@PathVariable(value = "id") Long albumId) {
         albumService.deleteAlbum(albumId);
         return new RedirectView("/");
+    }
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/artists/albums/new")
+    public RedirectView newAlbum(Album album) {
+        album = albumService.creerAlbum(album);
+        return new RedirectView("/artists/" + album.getArtist().getId());
     }
 
 
