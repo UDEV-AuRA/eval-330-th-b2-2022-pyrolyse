@@ -87,7 +87,8 @@ public class artists {
         albumService.deleteAlbum(albumId);
         return new RedirectView("/");
     }
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/artists/albums/new")
+    @RequestMapping(method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, value = "/artists/albums/new")
     public RedirectView newAlbum(Album album) {
         album = albumService.creerAlbum(album);
         return new RedirectView("/artists/" + album.getArtist().getId());
