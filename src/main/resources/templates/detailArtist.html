@@ -43,7 +43,7 @@
 
 			<form id="saveAlbum" th:action="|/artists/albums/new|" method="post">
 				<input type="text" name="title" id="title" placeholder="Ajouter un album..." class="form-control  ">
-				<input type="hidden" name="artist_id" id="artist_id" th:value="${artist.getId()}">
+				<input type="hidden" name="artist.id" id="artist.id" th:value="${artist.getId()}">
 				<div class="col-lg-2 text-center">
 					<button type="submit" form="saveAlbum" class="btn-success list-group-item list-group-item-action">Ajouter un album</button>
 				</div>
