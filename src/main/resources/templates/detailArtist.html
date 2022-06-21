@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head">
+
+</head>
+<body>
+	<div th:insert="fragments/header :: menu"> </div>
+	<div class="container">
+		<h2 th:if="${artist.id}">Détail de l'artiste [[${artist.name}]]</h2>
+		<h2 th:if="${artist.id == null}">Creation d'un artiste</h2>
+		<div class="row">
+			<form id="saveForm" th:action="|/artists/new|" method="post">
+				<input type="hidden" name="id" th:value="${artist.id}">
+				<div class="col-lg-12">
+					<div class="form-group">
+						<label for="name" class="form-control-label">Nom</label>
+						<input type="text" name="name" id="name" class="form-control" th:value="${artist.name}">
+
+						<label class="form-control-label">Albums</label>
+						<div class="row" >
+							<div class="col-lg-10">
+								<div class="list-group" th:if="${artist.id}" th:each="album : ${artist.albums}">
+									<li class="list-group-item" th:text="${album.title}">&nbsp;Let There Be Rock</li>
+									<span><button class="btn-danger list-group-item list-group-item-action"><a th:href="|/artists/albums/delete/${album.id}|"><span class="glyphicon glyphicon-remove"></span> SUPPRIMER</a></button></span>
+								</div>
+							</div>
+							<div class="col-lg-2 text-center">
+								<div class="list-group text-center">
+
+
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-10">
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<form id="saveAlbum" th:action="|/artists/albums/new|" method="post">
+				<input type="text" name="title" id="title" placeholder="Ajouter un album..." class="form-control  ">
+				<input type="hidden" name="artist.id" id="artist.id" th:value="${artist.getId()}">
+				<div class="col-lg-2 text-center">
+					<button type="submit" form="saveAlbum" class="btn-success list-group-item list-group-item-action">Ajouter un album</button>
+				</div>
+			</form>
+		<div class="row">
+			<input form="saveForm" type="submit"  value="Enregistrer" class="btn btn-primary" th:if="${artist.id}">
+			<input form="saveForm" type="submit" value="Ajouter" class="btn btn-primary" th:if="${artist.id == null}">
+
+			<a class="btn btn-danger" th:href="|/artists/${artist.id}/delete|">Supprimer</a>
+		</div>
+	</div>
+	</div>
+
+</body>
+</html>
